@@ -1,0 +1,76 @@
+﻿<Window x:Class="Questy.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:view="clr-namespace:Questy.View"
+        xmlns:viewmodel="clr-namespace:Questy.ViewModel"
+        mc:Ignorable="d"
+        Title="Questy :: A Fiesta Online Quest Editor :: Copyright © by Legends of Veritas" Height="920" Width="1350" ResizeMode="NoResize">
+    <Window.DataContext>
+        <viewmodel:MainWindowViewModel/>
+    </Window.DataContext>
+    
+    <Window.InputBindings>
+        <KeyBinding Key="N" Modifiers="Control" Command="{Binding NewQuestCommand}"/>
+        <KeyBinding Key="S" Modifiers="Control" Command="{Binding SaveQuestDataCommand}"/>
+        <KeyBinding Key="Delete" Command="{Binding DeleteQuestCommand}"/>
+    </Window.InputBindings>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="24"/>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
+        <DockPanel Grid.Column="0" Grid.ColumnSpan="2">
+            <Menu DockPanel.Dock="Top" Padding="4">
+                <MenuItem Header="File">
+                    <MenuItem Header="New Quest" Command="New" InputGestureText="Ctrl+N"></MenuItem>
+                    <MenuItem Header="Save Quests" Command="Save" InputGestureText="Ctrl+S"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="Dilaog Editor" Click="MenuItem_OnClick"/>
+                <MenuItem Header="Save Quests" Command="{Binding SaveQuestDataCommand}"/>
+            </Menu>
+            <StackPanel></StackPanel>
+        </DockPanel>
+        
+        <view:QuestListView Grid.Row="1" Grid.Column="0"/>
+        <TabControl Grid.Row="1" Grid.Column="1" Margin="10">
+            <TabItem Header="General">
+                <view:QuestGeneralView Margin="10"/>
+            </TabItem>
+            <TabItem Header="Mobs and Items">
+                <view:QuestMobItemView Margin="10"/>
+            </TabItem>
+            <TabItem Header="Actions">
+                <view:QuestActionView Margin="10"/>
+            </TabItem>
+            <TabItem Header="Rewards">
+                <view:QuestRewardView Margin="10"/>
+            </TabItem>
+            <TabItem Header="Start Script">
+                <view:QuestScriptView DataContext="{Binding StartScriptViewModel}"/>
+            </TabItem>
+            <TabItem Header="Doing Script">
+                <view:QuestScriptView DataContext="{Binding DoingScriptViewModel}"/>
+            </TabItem>
+            <TabItem Header="End Script">
+                <view:QuestScriptView DataContext="{Binding EndScriptViewModel}"/>
+            </TabItem>
+        </TabControl>
+        
+        <DockPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+            <StatusBar DockPanel.Dock="Bottom" Background="RoyalBlue" Foreground="White">
+                <StatusBarItem Content="{Binding InformationText}"/>
+                <StatusBarItem HorizontalAlignment="Right" Content="Made with ❤️ by Flainity"/>
+            </StatusBar>
+        </DockPanel>
+    </Grid>
+</Window>

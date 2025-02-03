@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="Questy.View.QuestListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewmodel="clr-namespace:Questy.ViewModel"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance viewmodel:QuestListViewModel}">
+    <UserControl.DataContext>
+        <viewmodel:QuestListViewModel/>
+    </UserControl.DataContext>
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Styles/QuestList.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <TextBox Grid.Row="0" Margin="7" Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}"/>
+        <Border Grid.Row="1" Padding="5" Margin="10" Background="#F2F2F2" CornerRadius="10">
+            <ListBox ItemsSource="{Binding QuestList}" SelectedItem="{Binding SelectedQuest}" BorderThickness="0" SelectionMode="Single" Background="Transparent">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Label Content="{Binding Name}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Padding="2,0,0,0" FontSize="12" FontFamily="Biome" FontWeight="Normal"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Border>
+    </Grid>
+</UserControl>

@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="Questy.View.Dialog.DialogEditorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Questy.View.Dialog"
+             xmlns:viewmodel="clr-namespace:Questy.ViewModel.Dialog"
+             xmlns:shinedata="clr-namespace:ShineData.Shine.Structure.Dialog;assembly=ShineData"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:converter="clr-namespace:Questy.Converter"
+             xmlns:helper="clr-namespace:Questy.Helper"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="500">
+    <UserControl.DataContext>
+        <viewmodel:DialogEditorViewModel/>
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <converter:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
+        
+        <ObjectDataProvider x:Key="QuestDialogType" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="shinedata:QuestDialogType" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Label Grid.Row="0" Grid.Column="0" Content="Dialog Type" Margin="-4,4,4,4"/>
+        <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Source={StaticResource QuestDialogType}}"
+                  SelectedItem="{Binding SelectedDialog.Type}" Margin="0,5,0,5">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock
+                        Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        
+        <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding SelectedDialog.Dialog}" Margin="0,0,0,5" AcceptsReturn="True" TextWrapping="Wrap"/>
+    </Grid>
+</UserControl>

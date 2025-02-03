@@ -1,0 +1,123 @@
+﻿<UserControl x:Class="Questy.View.QuestScriptView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Questy.View"
+             xmlns:viewmodel="clr-namespace:Questy.ViewModel"
+             mc:Ignorable="d"
+             d:DesignHeight="800" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <viewmodel:QuestScriptViewModel />
+    </UserControl.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="300" />
+        </Grid.ColumnDefinitions>
+
+        <TextBox Text="{Binding ScriptText}" AcceptsReturn="True" TextWrapping="Wrap" />
+
+        <ScrollViewer Grid.Column="1">
+            <StackPanel Grid.Column="1" Orientation="Vertical">
+                <Label FontWeight="Bold" FontSize="14" Content="Script Cheat Sheet" />
+                <Separator />
+                <StackPanel Orientation="Vertical">
+                    <Label FontWeight="Bold" Content="SAY" />
+                    <Label Content="Let's the player or NPC say something" Margin="0,-8,0,0" />
+                    <Label Content="SAY [DialogID] NPC" Foreground="Gray" Margin="0,-8,0,0" />
+                    <Label Content="SAY [DialogID] ME" Foreground="Gray" Margin="0,-8,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <Label FontWeight="Bold" Content="END" />
+                    <Label Content="Ends the current Quest Dialog" Margin="0,-8,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <Label FontWeight="Bold" Content="DONE" />
+                    <Label Content="Completes the Quest" Margin="0,-8,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <Label FontWeight="Bold" Content="ACCEPT" />
+                    <Label Content="Accepts the Quest" Margin="0,-8,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <Label FontWeight="Bold" Content=":MARK" />
+                    <Label Content="Sets a mark that can be jumped to" Margin="0,-8,0,0" />
+                    <Label Content=":MARK1" Foreground="Gray" Margin="0,-8,0,0" />
+                    <Label Content=":MARK2" Foreground="Gray" Margin="0,-8,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <Label FontWeight="Bold" Content="GOTO" />
+                    <Label Content="Jump to a defined Mark" Margin="0,-8,0,0" />
+                    <Label Content="GOTO [MarkName]" Foreground="Gray" Margin="0,-8,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <Label FontWeight="Bold" Content="RESULT" />
+                    <Label Content="Holds the result of clicked buttons" Margin="0,-8,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <Label FontWeight="Bold" Content="IF" />
+                    <Label Content="Check for a condition" Margin="0,-8,0,0" />
+                    <Label Content="IF RESULT == [ID] GOTO MARK1" Foreground="Gray" Margin="0,-8,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <Label FontWeight="Bold" Content="LINK" />
+                    <Label Content="Start another Quests dialog" Margin="0,-8,0,0" />
+                    <Label Content="LINK [QuestID]" Foreground="Gray" Margin="0,-8,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <Label FontWeight="Bold" Content="GET__PLAYER__EMPTY__INVENTORY" />
+                    <Label Content="Stores the amount of empty slots in a variable" Margin="0,-8,0,0" />
+                    <Label Content="GET_PLAYER_EMPTY_INVENTORY [Variable]" Foreground="Gray" Margin="0,-8,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <Label FontWeight="Bold" Content="CREATE__ITEM" />
+                    <Label Content="Creates an item in the players inventory" Margin="0,-8,0,0" />
+                    <Label Content="CREATE_ITEM [ItemID] [Amount]" Foreground="Gray" Margin="0,-8,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <Label FontWeight="Bold" Content="DELETE__ITEM" />
+                    <Label Content="Deletes an item from the players inventory" Margin="0,-8,0,0" />
+                    <Label Content="DELETE__ITEM [ItemID] [Amount]" Foreground="Gray" Margin="0,-8,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <Label FontWeight="Bold" Content="DROP__ITEM" />
+                    <Label Content="Drops an item to the ground" Margin="0,-8,0,0" />
+                    <Label Content="DROP__ITEM [ItemID] [Amount]" Foreground="Gray" Margin="0,-8,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <Label FontWeight="Bold" Content="GET__ITEM__LOT" />
+                    <Label Content="Gets the amount of this item in the inventory" Margin="0,-8,0,0" />
+                    <Label Content="GET__ITEM__LOT [ItemID]" Foreground="Gray" Margin="0,-8,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <Label FontWeight="Bold" Content="SET__ABSTATE" />
+                    <Label Content="Set an abstate to the player" Margin="0,-8,0,0" />
+                    <Label Content="SET__ABSTATE [AbstateName] [Strength] [KeepTime]" Foreground="Gray"
+                           Margin="0,-8,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <Label FontWeight="Bold" Content="RESET__ABSTATE" />
+                    <Label Content="Removes an abstate from the player" Margin="0,-8,0,0" />
+                    <Label Content="RESET__ABSTATE [AbstateName]" Foreground="Gray" Margin="0,-8,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <Label FontWeight="Bold" Content="GET__PLAYER__CLASS" />
+                    <Label Content="Gets the class id of the player" Margin="0,-8,0,0" />
+                    <Label Content="GET__PLAYER__CLASS [Variable]" Foreground="Gray" Margin="0,-8,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <Label FontWeight="Bold" Content="GET__PLAYER__LEVEL" />
+                    <Label Content="Gets the level of the player" Margin="0,-8,0,0" />
+                    <Label Content="GET__PLAYER__LEVEL [Variable]" Foreground="Gray" Margin="0,-8,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <Label FontWeight="Bold" Content="GET__PLAYER__GENDER" />
+                    <Label Content="Gets the gender of the player" Margin="0,-8,0,0" />
+                    <Label Content="GET__PLAYER__GENDER [Variable]" Foreground="Gray" Margin="0,-8,0,0" />
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

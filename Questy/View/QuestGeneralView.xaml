@@ -1,0 +1,285 @@
+﻿<UserControl x:Class="Questy.View.QuestGeneralView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewmodel="clr-namespace:Questy.ViewModel"
+             xmlns:converter="clr-namespace:Questy.Converter"
+             xmlns:shinedata="clr-namespace:ShineData.Shine.Structure.Quest;assembly=ShineData"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="1000" d:DataContext="{d:DesignInstance viewmodel:QuestGeneralViewModel}">
+    <UserControl.DataContext>
+        <viewmodel:QuestGeneralViewModel/>
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <converter:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
+        
+        <ObjectDataProvider x:Key="QuestType" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="shinedata:QuestType" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        
+        <ObjectDataProvider x:Key="DailyQuestType" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="shinedata:DailyQuestType" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        
+        <ObjectDataProvider x:Key="CharacterClass" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="shinedata:CharacterClass" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        
+        <ObjectDataProvider x:Key="Gender" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="shinedata:Gender" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        
+        <ObjectDataProvider x:Key="QuestStartDateMode" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="shinedata:QuestStartDateMode" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        
+        <ResourceDictionary x:Key="Components">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Styles/BaseComponents.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        
+        <GroupBox Grid.Row="0" Grid.Column="0" Header="General Information">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+                
+                <Label Grid.Row="0" Grid.Column="0" Content="Enabled"/>
+                <Label Grid.Row="1" Grid.Column="0" Content="Name ID"/>
+                <Label Grid.Row="2" Grid.Column="0" Content="Description"/>
+                <Label Grid.Row="3" Grid.Column="0" Content="Region"/>
+                <Label Grid.Row="4" Grid.Column="0" Content="Type"/>
+                <Label Grid.Row="5" Grid.Column="0" Content="Repeatable"/>
+                <Label Grid.Row="6" Grid.Column="0" Content="Daily Type"/>
+                
+                <CheckBox Grid.Row="0" Grid.Column="1" IsChecked="{Binding SelectedQuest.StartCondition.IsWaitListView}" Margin="0,10,0,0"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedQuest.NameId}" Resources="{StaticResource Components}"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedQuest.BriefId}" Resources="{StaticResource Components}"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding SelectedQuest.Region}" Resources="{StaticResource Components}"/>
+                <ComboBox Grid.Row="4" Grid.Column="1" ItemsSource="{Binding Source={StaticResource QuestType}}" SelectedItem="{Binding SelectedQuest.Type}" Margin="0,5,0,0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <CheckBox Grid.Row="5" Grid.Column="1" IsChecked="{Binding SelectedQuest.IsRepeatable}" Margin="0,10,0,0"/>
+                <ComboBox Grid.Row="6" Grid.Column="1" ItemsSource="{Binding Source={StaticResource DailyQuestType}}" SelectedItem="{Binding SelectedQuest.DailyQuestType}" Margin="0,5,0,0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </Grid>
+        </GroupBox>
+        
+        <GroupBox Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Header="Start Conditions">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+                
+                <Label Grid.Row="0" Grid.Column="0" Content="Distant Accept"/>
+                <Label Grid.Row="1" Grid.Column="0" Content="Requires Level"/>
+                <Label Grid.Row="2" Grid.Column="0" Content="Minimum Level"/>
+                <Label Grid.Row="3" Grid.Column="0" Content="Maximum Level"/>
+                <Label Grid.Row="4" Grid.Column="0" Content="Requires NPC"/>
+                <Label Grid.Row="5" Grid.Column="0" Content="NPC ID"/>
+                <Label Grid.Row="6" Grid.Column="0" Content="Requires Item"/>
+                <Label Grid.Row="7" Grid.Column="0" Content="Item ID"/>
+                <Label Grid.Row="8" Grid.Column="0" Content="Item Amount"/>
+                <Label Grid.Row="9" Grid.Column="0" Content="Requires Location"/>
+                <Label Grid.Row="10" Grid.Column="0" Content="Location Map"/>
+                <Label Grid.Row="11" Grid.Column="0" Content="Location X"/>
+                <Label Grid.Row="12" Grid.Column="0" Content="Location Y"/>
+                <Label Grid.Row="13" Grid.Column="0" Content="Location Range"/>
+                
+                <CheckBox Grid.Row="0" Grid.Column="1" IsChecked="{Binding SelectedQuest.StartCondition.IsWaitListProgress}" Margin="0,10,0,0"/>
+                <CheckBox Grid.Row="1" Grid.Column="1" IsChecked="{Binding SelectedQuest.StartCondition.RequiresLevel}" Margin="0,10,0,0"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedQuest.StartCondition.MinLevel}" IsEnabled="{Binding SelectedQuest.StartCondition.RequiresLevel}" Resources="{StaticResource Components}"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding SelectedQuest.StartCondition.MaxLevel}" IsEnabled="{Binding SelectedQuest.StartCondition.RequiresLevel}" Resources="{StaticResource Components}"/>
+                <CheckBox Grid.Row="4" Grid.Column="1" IsChecked="{Binding SelectedQuest.StartCondition.RequiresNPC}" Margin="0,10,0,0"/>
+                <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding SelectedQuest.StartCondition.NPCID}" IsEnabled="{Binding SelectedQuest.StartCondition.RequiresNPC}" Resources="{StaticResource Components}"/>
+                <CheckBox Grid.Row="6" Grid.Column="1" IsChecked="{Binding SelectedQuest.StartCondition.RequiresItem}" Resources="{StaticResource Components}"/>
+                <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding SelectedQuest.StartCondition.ItemID}" IsEnabled="{Binding SelectedQuest.StartCondition.RequiresItem}" Resources="{StaticResource Components}"/>
+                <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding SelectedQuest.StartCondition.ItemLot}" IsEnabled="{Binding SelectedQuest.StartCondition.RequiresItem}" Resources="{StaticResource Components}"/>
+                <CheckBox Grid.Row="9" Grid.Column="1" IsChecked="{Binding SelectedQuest.StartCondition.RequiresLocation}" Resources="{StaticResource Components}"/>
+                <TextBox Grid.Row="10" Grid.Column="1" Text="{Binding SelectedQuest.StartCondition.LocationMapID}" IsEnabled="{Binding SelectedQuest.StartCondition.RequiresLocation}" Resources="{StaticResource Components}"/>
+                <TextBox Grid.Row="11" Grid.Column="1" Text="{Binding SelectedQuest.StartCondition.LocationX}" IsEnabled="{Binding SelectedQuest.StartCondition.RequiresLocation}" Resources="{StaticResource Components}"/>
+                <TextBox Grid.Row="12" Grid.Column="1" Text="{Binding SelectedQuest.StartCondition.LocationY}" IsEnabled="{Binding SelectedQuest.StartCondition.RequiresLocation}" Resources="{StaticResource Components}"/>
+                <TextBox Grid.Row="13" Grid.Column="1" Text="{Binding SelectedQuest.StartCondition.LocationRange}" IsEnabled="{Binding SelectedQuest.StartCondition.RequiresLocation}" Resources="{StaticResource Components}"/>
+                
+                <Label Grid.Row="0" Grid.Column="2" Content="Requires Quest"/>
+                <Label Grid.Row="1" Grid.Column="2" Content="Quest ID"/>
+                <Label Grid.Row="2" Grid.Column="2" Content="Requires Race"/>
+                <Label Grid.Row="3" Grid.Column="2" Content="Race ID"/>
+                <Label Grid.Row="4" Grid.Column="2" Content="Requires Class"/>
+                <Label Grid.Row="5" Grid.Column="2" Content="Class"/>
+                <Label Grid.Row="6" Grid.Column="2" Content="Requires Gender"/>
+                <Label Grid.Row="7" Grid.Column="2" Content="Gender"/>
+                <Label Grid.Row="8" Grid.Column="2" Content="Requires Date"/>
+                <Label Grid.Row="9" Grid.Column="2" Content="Date Mode"/>
+                <Label Grid.Row="10" Grid.Column="2" Content="Start Date"/>
+                <Label Grid.Row="11" Grid.Column="2" Content="End Date"/>
+                
+                <CheckBox Grid.Row="0" Grid.Column="3" IsChecked="{Binding SelectedQuest.StartCondition.RequiresQuest}" Margin="0,10,0,0"/>
+                <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding SelectedQuest.StartCondition.QuestID}" IsEnabled="{Binding SelectedQuest.StartCondition.RequiresQuest}" Resources="{StaticResource Components}"/>
+                <CheckBox Grid.Row="2" Grid.Column="3" IsChecked="{Binding SelectedQuest.StartCondition.RequiresRace}" Margin="0,10,0,0"/>
+                <TextBox Grid.Row="3" Grid.Column="3" Text="{Binding SelectedQuest.StartCondition.Race}" IsEnabled="{Binding SelectedQuest.StartCondition.RequiresRace}" Resources="{StaticResource Components}"/>
+                <CheckBox Grid.Row="4" Grid.Column="3" IsChecked="{Binding SelectedQuest.StartCondition.RequiresClass}" Resources="{StaticResource Components}"/>
+                <ComboBox Grid.Row="5" Grid.Column="3" ItemsSource="{Binding Source={StaticResource CharacterClass}}" SelectedItem="{Binding SelectedQuest.StartCondition.Class}" IsEnabled="{Binding SelectedQuest.StartCondition.RequiresClass}" Margin="0,5,0,0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <CheckBox Grid.Row="6" Grid.Column="3" IsChecked="{Binding SelectedQuest.StartCondition.RequiresGender}" Resources="{StaticResource Components}"/>
+                <ComboBox Grid.Row="7" Grid.Column="3" ItemsSource="{Binding Source={StaticResource Gender}}" SelectedItem="{Binding SelectedQuest.StartCondition.Gender}" IsEnabled="{Binding SelectedQuest.StartCondition.RequiresGender}" Margin="0,5,0,0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <CheckBox Grid.Row="8" Grid.Column="3" IsChecked="{Binding SelectedQuest.StartCondition.RequiresDateMode}" Resources="{StaticResource Components}"/>
+                <ComboBox Grid.Row="9" Grid.Column="3" ItemsSource="{Binding Source={StaticResource QuestStartDateMode}}" SelectedItem="{Binding SelectedQuest.StartCondition.DateMode}" IsEnabled="{Binding SelectedQuest.StartCondition.RequiresDateMode}" Margin="0,5,0,0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <TextBox Grid.Row="10" Grid.Column="3" Text="{Binding SelectedQuest.StartCondition.StartDate}" IsEnabled="{Binding SelectedQuest.StartCondition.RequiresDateMode}" Resources="{StaticResource Components}"/>
+                <TextBox Grid.Row="11" Grid.Column="3" Text="{Binding SelectedQuest.StartCondition.EndDate}" IsEnabled="{Binding SelectedQuest.StartCondition.RequiresDateMode}" Resources="{StaticResource Components}"/>
+            </Grid>
+        </GroupBox>
+        
+        <GroupBox Grid.Row="1" Grid.Column="0" Header="End Conditions">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+                
+                <Label Grid.Row="0" Grid.Column="0" Content="Distant Complete"/>
+                <Label Grid.Row="1" Grid.Column="0" Content="Requires Level"/>
+                <Label Grid.Row="2" Grid.Column="0" Content="Level"/>
+                <Label Grid.Row="3" Grid.Column="0" Content="Requires Location"/>
+                <Label Grid.Row="4" Grid.Column="0" Content="Location Map"/>
+                <Label Grid.Row="5" Grid.Column="0" Content="Location X"/>
+                <Label Grid.Row="6" Grid.Column="0" Content="Location Y"/>
+                <Label Grid.Row="7" Grid.Column="0" Content="Location Range"/>
+                <Label Grid.Row="8" Grid.Column="0" Content="Requires Race"/>
+                <Label Grid.Row="9" Grid.Column="0" Content="Race"/>
+                <Label Grid.Row="10" Grid.Column="0" Content="Requires Class"/>
+                <Label Grid.Row="11" Grid.Column="0" Content="Class"/>
+                <Label Grid.Row="12" Grid.Column="0" Content="Scenario"/>
+                <Label Grid.Row="13" Grid.Column="0" Content="Scenario ID"/>
+                <Label Grid.Row="14" Grid.Column="0" Content="Time Limited"/>
+                <Label Grid.Row="15" Grid.Column="0" Content="Time Limit"/>
+                
+                <CheckBox Grid.Row="0" Grid.Column="1" IsChecked="{Binding SelectedQuest.EndCondition.IsWaitListProgress}" Margin="0,10,0,0"/>
+                <CheckBox Grid.Row="1" Grid.Column="1" IsChecked="{Binding SelectedQuest.EndCondition.RequiresLevel}" Margin="0,10,0,0"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedQuest.EndCondition.Level}" IsEnabled="{Binding SelectedQuest.EndCondition.RequiresLevel}" Resources="{StaticResource Components}"/>
+                <CheckBox Grid.Row="3" Grid.Column="1" IsChecked="{Binding SelectedQuest.EndCondition.RequiresLocation}" Margin="0,10,0,0"/>
+                <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding SelectedQuest.EndCondition.LocationMapID}" IsEnabled="{Binding SelectedQuest.EndCondition.RequiresLocation}" Resources="{StaticResource Components}"/>
+                <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding SelectedQuest.EndCondition.LocationX}" IsEnabled="{Binding SelectedQuest.EndCondition.RequiresLocation}" Resources="{StaticResource Components}"/>
+                <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding SelectedQuest.EndCondition.LocationY}" IsEnabled="{Binding SelectedQuest.EndCondition.RequiresLocation}" Resources="{StaticResource Components}"/>
+                <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding SelectedQuest.EndCondition.LocationRange}" IsEnabled="{Binding SelectedQuest.EndCondition.RequiresLocation}" Resources="{StaticResource Components}"/>
+                <CheckBox Grid.Row="8" Grid.Column="1" IsChecked="{Binding SelectedQuest.EndCondition.RequiresRace}" Margin="0,10,0,0"/>
+                <TextBox Grid.Row="9" Grid.Column="1" Text="{Binding SelectedQuest.EndCondition.Race}" IsEnabled="{Binding SelectedQuest.EndCondition.RequiresRace}" Resources="{StaticResource Components}"/>
+                <CheckBox Grid.Row="10" Grid.Column="1" IsChecked="{Binding SelectedQuest.EndCondition.RequiresClass}" Margin="0,10,0,0"/>
+                <ComboBox Grid.Row="11" Grid.Column="1" ItemsSource="{Binding Source={StaticResource CharacterClass}}" SelectedItem="{Binding SelectedQuest.EndCondition.Class}" IsEnabled="{Binding SelectedQuest.EndCondition.RequiresClass}" Margin="0,5,0,0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <CheckBox Grid.Row="12" Grid.Column="1" IsChecked="{Binding SelectedQuest.EndCondition.IsScenario}" Margin="0,10,0,0"/>
+                <TextBox Grid.Row="13" Grid.Column="1" Text="{Binding SelectedQuest.EndCondition.ScenarioID}" IsEnabled="{Binding SelectedQuest.EndCondition.IsScenario}" Resources="{StaticResource Components}"/>
+                <CheckBox Grid.Row="14" Grid.Column="1" IsChecked="{Binding SelectedQuest.EndCondition.IsTimeLimit}" Margin="0,10,0,0"/>
+                <TextBox Grid.Row="15" Grid.Column="1" Text="{Binding SelectedQuest.EndCondition.TimeLimit}" IsEnabled="{Binding SelectedQuest.EndCondition.IsTimeLimit}" Resources="{StaticResource Components}"/>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</UserControl>
