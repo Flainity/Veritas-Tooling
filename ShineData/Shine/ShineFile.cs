@@ -5,22 +5,30 @@ using ShineData.Shine.Extension;
 
 namespace ShineData.Shine;
 
+/// <summary>
+/// The ShineFile class represents a shine file.
+/// This class is used to read and write shine files.
+/// </summary>
 public class ShineFile : IDisposable
 {
-    public DataTable Table { get; set; }
-    public byte[] ChecksumData { get; set; }
-    private byte[] CryptHeader { get; set; }
+    public DataTable Table { get; }
+    private byte[]? ChecksumData { get; set; }
+    private byte[]? SecurityHeader { get; set; }
     private uint DataHeader { get; set; }
     private uint DefaultRowLength { get; set; }
 
-    private readonly string file_name;
+    private readonly string _fileName;
 
+    /// <summary>
+    /// Initializes a new Shine File instance.
+    /// </summary>
+    /// <param name="path">Path to the file</param>
     public ShineFile(string path)
     {
-        file_name = path;
+        _fileName = path;
         Table = new DataTable(Path.GetFileName(path));
 
-        PopulateTable();
+        Load();
     }
 
     public void Dispose()
@@ -28,23 +36,24 @@ public class ShineFile : IDisposable
         Table.Dispose();
     }
 
-    private void PopulateTable()
+    /// <summary>
+    /// Load the shine file into memory.
+    /// </summary>
+    private void Load()
     {
-        if (!File.Exists(file_name))
+        if (!File.Exists(_fileName))
         {
             return;
         }
 
         byte[] buffer;
-        ChecksumData = File.ReadAllBytes(file_name);
+        ChecksumData = File.ReadAllBytes(_fileName);
 
-        using (var file = File.OpenRead(file_name))
-        using (var reader = new BinaryReader(file))
+        using (var file = File.OpenRead(_fileName))
+        using (var fileReader = new BinaryReader(file))
         {
-            CryptHeader = reader.ReadBytes(32);
-
-            var length = reader.ReadInt32();
-            buffer = reader.ReadBytes(length - 0x24);
+            SecurityHeader = fileReader.ReadBytes(32);
+            buffer = fileReader.ReadBytes(fileReader.ReadInt32() - 36);
 
             Encryptor.Encrypt(buffer, 0, buffer.Length);
         }
@@ -63,7 +72,10 @@ public class ShineFile : IDisposable
         }
     }
 
-    public void SaveFile()
+    /// <summary>
+    /// Saves the shine file to disk.
+    /// </summary>
+    public void Save()
     {
         var stream = new MemoryStream();
         using var writer = new ShineBinaryWriter(stream);
@@ -114,9 +126,9 @@ public class ShineFile : IDisposable
 
         Encryptor.Encrypt(destinationArray, 0, destinationArray.Length);
 
-        using var w = new BinaryWriter(File.Create(file_name));
+        using var w = new BinaryWriter(File.Create(_fileName));
 
-        w.Write(CryptHeader.ToArray());
+        w.Write(SecurityHeader.ToArray());
         w.Write(destinationArray.Length + 0x24);
         w.Write(destinationArray);
     }
