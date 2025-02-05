@@ -76,7 +76,7 @@ public partial class DialogQuestyViewModel : ObservableObject
             _file.Table.Rows.Add(row);
         }
         
-        _file.SaveFile();
+        _file.Save();
         InformationText = "Dialog data has been saved successfully!";
         
         return Task.CompletedTask;

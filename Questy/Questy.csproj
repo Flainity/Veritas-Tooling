@@ -8,6 +8,10 @@
         <ApplicationIcon>QuestyIcon.ico</ApplicationIcon>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <OutputPath>..\Release\</OutputPath>
+    </PropertyGroup>
+
     <ItemGroup>
       <PackageReference Include="Cogs.Collections" Version="1.12.1" />
       <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
