@@ -2,6 +2,7 @@
 using ShineData.Shine.Cryptography;
 using ShineData.Shine.IO;
 using ShineData.Shine.Extension;
+using ShineData.Shine.Files;
 
 namespace ShineData.Shine;
 

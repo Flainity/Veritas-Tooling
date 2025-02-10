@@ -1,5 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{3D30CC6F-07DE-4D20-A302-7DB26899C302}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{A5C36873-E637-411A-82EC-842945C28618}"
@@ -8,14 +11,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShineData", "ShineData\Shin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Questy", "Questy\Questy.csproj", "{F88A47B9-72F0-46DF-8E4F-CCEEDD57C7AE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shine Suite", "Shine Suite", "{63CEFAB1-83B3-4AA5-8A0C-4D7407E4497A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShineSuite", "ShineSuite\ShineSuite.csproj", "{ECACF2C3-ED6C-46BE-B4ED-A902CF4E2A84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShineSuite.Module.Abstate", "ShineSuite.Module.Abstate\ShineSuite.Module.Abstate.csproj", "{FFD22254-106E-479B-8D13-345263056F47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShineSuite.Common", "ShineSuite.Common\ShineSuite.Common.csproj", "{7589483D-5365-4216-ABFA-1AA32758A784}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{CCD43594-8955-44AF-9874-5EF744F1AF23} = {A5C36873-E637-411A-82EC-842945C28618}
-		{F88A47B9-72F0-46DF-8E4F-CCEEDD57C7AE} = {3D30CC6F-07DE-4D20-A302-7DB26899C302}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{CCD43594-8955-44AF-9874-5EF744F1AF23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -26,5 +33,28 @@ Global
 		{F88A47B9-72F0-46DF-8E4F-CCEEDD57C7AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F88A47B9-72F0-46DF-8E4F-CCEEDD57C7AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F88A47B9-72F0-46DF-8E4F-CCEEDD57C7AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECACF2C3-ED6C-46BE-B4ED-A902CF4E2A84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECACF2C3-ED6C-46BE-B4ED-A902CF4E2A84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECACF2C3-ED6C-46BE-B4ED-A902CF4E2A84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECACF2C3-ED6C-46BE-B4ED-A902CF4E2A84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFD22254-106E-479B-8D13-345263056F47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFD22254-106E-479B-8D13-345263056F47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFD22254-106E-479B-8D13-345263056F47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFD22254-106E-479B-8D13-345263056F47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7589483D-5365-4216-ABFA-1AA32758A784}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7589483D-5365-4216-ABFA-1AA32758A784}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7589483D-5365-4216-ABFA-1AA32758A784}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7589483D-5365-4216-ABFA-1AA32758A784}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CCD43594-8955-44AF-9874-5EF744F1AF23} = {A5C36873-E637-411A-82EC-842945C28618}
+		{F88A47B9-72F0-46DF-8E4F-CCEEDD57C7AE} = {3D30CC6F-07DE-4D20-A302-7DB26899C302}
+		{63CEFAB1-83B3-4AA5-8A0C-4D7407E4497A} = {3D30CC6F-07DE-4D20-A302-7DB26899C302}
+		{ECACF2C3-ED6C-46BE-B4ED-A902CF4E2A84} = {63CEFAB1-83B3-4AA5-8A0C-4D7407E4497A}
+		{FFD22254-106E-479B-8D13-345263056F47} = {63CEFAB1-83B3-4AA5-8A0C-4D7407E4497A}
+		{7589483D-5365-4216-ABFA-1AA32758A784} = {63CEFAB1-83B3-4AA5-8A0C-4D7407E4497A}
 	EndGlobalSection
 EndGlobal

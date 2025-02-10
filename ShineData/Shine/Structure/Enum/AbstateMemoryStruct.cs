@@ -1,0 +1,17 @@
+﻿namespace ShineData.Shine.Structure.Enum;
+
+public enum AbstateMemoryStruct : uint
+{
+    AMS_ELEMENT_NORMAL = 1,
+    AMS_TICK_ROUTINE = 2,
+    AMS_PARTY_ENCHANT = 3,
+    AMS_REST_COUNT = 4,
+    AMS_POLYMORPH = 5,
+    AMS_EACH_TICK_ROUTINE = 6,
+    AMS_HIDE = 7,
+    AMS_COUPLE_PARTY_ENCHANT = 8,
+    AMS_GUILD_ACADEMY_MASTER_ENCHANT = 9,
+    AMS_REINFORCED_MOVE = 10,
+    AMS_ELEMENT_RECOVERY = 11,
+    AMS_REST_COUNT_HEALTH_RATE = 12,
+}
