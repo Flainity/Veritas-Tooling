@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <UseWPF>true</UseWPF>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoCompleteTextBox" Version="1.7.2" />
+      <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+      <PackageReference Include="Extended.Wpf.Toolkit" Version="4.7.25103.5738" />
+      <PackageReference Include="iNKORE.UI.WPF.Modern" Version="0.10.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ShineData\ShineData.csproj" />
+      <ProjectReference Include="..\ShineSuite.Common\ShineSuite.Common.csproj" />
+      <ProjectReference Include="..\ShineSuite.DependencyInjection\ShineSuite.DependencyInjection.csproj" />
+    </ItemGroup>
+
+</Project>

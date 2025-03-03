@@ -1,0 +1,33 @@
+﻿<modern:Page x:Class="ShineSuite.View.Page.SettingsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:ShineSuite.View.Page"
+      xmlns:modern="http://schemas.inkore.net/lib/ui/wpf/modern"
+      mc:Ignorable="d"
+      Title="SettingsPage" Height="450" Width="800" DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+    <Grid>
+        <StackPanel HorizontalAlignment="Left">
+                <TextBlock
+                    Margin="0,12,0,0"
+                    Style="{DynamicResource SubtitleTextBlockStyle}"
+                    Text="Theme Mode" />
+                <StackPanel x:Name="ThemePanel" Margin="0,10,0,0">
+                    <RadioButton
+                        Checked="OnThemeRadioButtonChecked"
+                        Content="Light"
+                        KeyDown="OnThemeRadioButtonKeyDown"
+                        Tag="Light" />
+                    <RadioButton
+                        Checked="OnThemeRadioButtonChecked"
+                        Content="Dark"
+                        Tag="Dark" />
+                    <RadioButton
+                        Checked="OnThemeRadioButtonChecked"
+                        Content="Use system setting"
+                        Tag="Default" />
+                </StackPanel>
+            </StackPanel>
+    </Grid>
+</modern:Page>

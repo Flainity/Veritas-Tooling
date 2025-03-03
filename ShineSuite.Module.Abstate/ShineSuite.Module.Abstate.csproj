@@ -9,11 +9,21 @@
     <ItemGroup>
       <PackageReference Include="Cogs.Collections" Version="1.12.1" />
       <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+      <PackageReference Include="iNKORE.UI.WPF.Modern" Version="0.10.0" />
+      <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
+      <PackageReference Include="WPF-UI" Version="4.0.1" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\ShineData\ShineData.csproj" />
       <ProjectReference Include="..\ShineSuite.Common\ShineSuite.Common.csproj" />
+      <ProjectReference Include="..\ShineSuite.DependencyInjection\ShineSuite.DependencyInjection.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="iNKORE.UI.WPF.Modern.Controls">
+        <HintPath>..\..\..\..\..\.nuget\packages\inkore.ui.wpf.modern\0.10.0\lib\net6.0-windows7.0\iNKORE.UI.WPF.Modern.Controls.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

@@ -10,8 +10,4 @@
       <OutputPath>..\Release\</OutputPath>
     </PropertyGroup>
 
-    <ItemGroup>
-      <Folder Include="Shine\Attribute\" />
-    </ItemGroup>
-
 </Project>

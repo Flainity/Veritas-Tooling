@@ -1,4 +1,5 @@
-﻿using ShineData.Shine.Cryptography;
+﻿using System.Collections.ObjectModel;
+using ShineData.Shine.Cryptography;
 using ShineData.Shine.Factory;
 using ShineData.Shine.Files;
 using ShineData.Shine.IO;
@@ -14,19 +15,21 @@ public class ShineClass
     private static uint _columnCount;
     private static uint _defaultRecordLength;
 
-    public static IEnumerable<T> Load<T>(string fileName) where T : IShineFile
+    public static BaseShineFile<TEntry> Load<T, TEntry>(string fileName) where T : BaseShineFile<TEntry>, new() where TEntry : new()
     {
         var serverPath = @"C:\Veritas\9Data\Shine\";
-        var fileType = typeof(T);
-        var fields = fileType.GetProperties();
-        var list = new List<T>();
+        var fields = typeof(TEntry).GetProperties();
+        var factoryFile = ShineFactory.Create<T, TEntry>();
+        var list = new List<TEntry>();
 
         serverPath += fileName;
+        factoryFile.FilePath = serverPath;
 
         using (var file = File.OpenRead(serverPath))
         using (var fileReader = new BinaryReader(file))
         {
             _securityHeader = fileReader.ReadBytes(32);
+            factoryFile.SecurityHeader = _securityHeader;
             _fileData = fileReader.ReadBytes(fileReader.ReadInt32() - 36);
 
             Encryptor.Encrypt(_fileData, 0, _fileData.Length);
@@ -39,6 +42,10 @@ public class ShineClass
             _recordCount = reader.ReadUInt32();
             _defaultRecordLength = reader.ReadUInt32();
             _columnCount = reader.ReadUInt32();
+
+            factoryFile.DataHeader = _dataHeader;
+            factoryFile.DefaultRecordLength = _defaultRecordLength;
+            factoryFile.ColumnCount = _columnCount;
             
             if (_columnCount != fields.Length)
             {
@@ -54,7 +61,10 @@ public class ShineClass
                 var columnType = reader.ReadUInt32();
                 var size = reader.ReadInt32();
 
-                tempColumns.Add(new ShineColumn(name, columnType, size));
+                var column = new ShineColumn(name, columnType, size);
+                
+                tempColumns.Add(column);
+                factoryFile.Columns.Add(column);
 
                 recordLength += size;
             }
@@ -83,12 +93,18 @@ public class ShineClass
                     parameters.Add(ReadCell(reader, column, rowLength));
                 }
 
-                var row = ShineFactory<T>.Create(parameters.ToArray());
-                list.Add(row);
+                var entry = (TEntry) Activator.CreateInstance(typeof(TEntry), parameters.ToArray());
+                list.Add(entry);
             }
         }
 
-        return list;
+        factoryFile.Records = new ObservableCollection<TEntry>(list);
+        return factoryFile;
+    }
+    
+    public static Task<BaseShineFile<TEntry>> LoadAsync<T, TEntry>(string fileName) where T : BaseShineFile<TEntry>, new() where TEntry : new()
+    {
+        return Task.Run(() => Load<T, TEntry>(fileName));
     }
 
     private static object ReadCell(ShineBinaryReader reader, ShineColumn column, ushort rowLength)

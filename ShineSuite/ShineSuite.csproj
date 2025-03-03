@@ -5,14 +5,30 @@
         <TargetFramework>net7.0-windows</TargetFramework>
         <Nullable>enable</Nullable>
         <UseWPF>true</UseWPF>
+        <LangVersion>latest</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+      <PackageReference Include="Extended.Wpf.Toolkit" Version="4.7.25103.5738" />
+      <PackageReference Include="iNKORE.UI.WPF.Modern" Version="0.10.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.2" />
+      <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.2" />
+      <PackageReference Include="Microsoft.Windows.Compatibility" Version="9.0.2" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\ShineSuite.Module.Abstate\ShineSuite.Module.Abstate.csproj" />
+      <ProjectReference Include="..\ShineSuite.Module.Action\ShineSuite.Module.Action.csproj" />
+      <ProjectReference Include="..\ShineSuite.Module.Skill\ShineSuite.Module.Skill.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Update="Style\DefaultControls.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
     </ItemGroup>
 
 </Project>

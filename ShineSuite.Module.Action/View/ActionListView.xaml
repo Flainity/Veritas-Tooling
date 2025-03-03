@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="ShineSuite.Module.Action.View.ActionListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ShineSuite.Module.Action.View"
+             xmlns:viewmodels="clr-namespace:ShineSuite.Module.Action.ViewModel"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance viewmodels:ActionListModel}">
+    
+    <ListBox ItemsSource="{Binding ItemActionEffectDescriptions}" SelectedItem="{Binding SelectedItemAction}" BorderThickness="0" SelectionMode="Single" Background="Transparent">
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <Grid>
+                    <Label Content="{Binding}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Padding="2,0,0,0" FontSize="12" FontFamily="Biome" FontWeight="Normal"/>
+                </Grid>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
+</UserControl>

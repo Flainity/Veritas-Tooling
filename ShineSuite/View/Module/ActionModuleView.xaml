@@ -1,0 +1,21 @@
+﻿<ui:Page x:Class="ShineSuite.View.Module.ActionModuleView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+             xmlns:local="clr-namespace:ShineSuite.View.Module"
+             xmlns:actionModule="clr-namespace:ShineSuite.Module.Action.View;assembly=ShineSuite.Module.Action"
+             xmlns:viewmodels="clr-namespace:ShineSuite.ViewModel"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance viewmodels:ActionModuleModel}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <ContentControl Grid.Column="0" Content="{Binding ListView}"/>
+        <ContentControl Grid.Column="1" Content="{Binding EditorView}"/>
+    </Grid>
+</ui:Page>

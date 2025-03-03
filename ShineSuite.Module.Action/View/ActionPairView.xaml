@@ -1,0 +1,212 @@
+﻿<UserControl x:Class="ShineSuite.Module.Action.View.ActionPairView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ShineSuite.Module.Action.View"
+             xmlns:viewmodels="clr-namespace:ShineSuite.Module.Action.ViewModel"
+             xmlns:converter="clr-namespace:ShineSuite.Common.Converter;assembly=ShineSuite.Common"
+             xmlns:shinedata="clr-namespace:ShineData.Shine.Structure.Enum;assembly=ShineData"
+             xmlns:actiondata="clr-namespace:ShineData.Shine.Structure.Enum.Action;assembly=ShineData"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+             xmlns:ikw="http://schemas.inkore.net/lib/ui/wpf"
+             xmlns:helper="clr-namespace:ShineSuite.Module.Action.Helper"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="900" d:DataContext="{d:DesignInstance viewmodels:ActionPairModel}">
+    <UserControl.Resources>
+        <converter:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
+        
+        <ObjectDataProvider x:Key="ActionTargetType" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="actiondata:ActionTargetType" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        
+        <ObjectDataProvider x:Key="ActionActivityType" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="actiondata:ActionActivityType" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="450"/>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="400"/>
+        </Grid.ColumnDefinitions>
+        
+        <Label Grid.Column="0" Grid.Row="0" Content="Condition Mapping" FontWeight="Bold"/>
+        <ikw:SimpleStackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical" Margin="5" Spacing="5">
+            <Grid helper:GridHelper.Spacing="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                
+                <ComboBox Grid.Column="0" ui:ControlHelper.Header="Subject Type" 
+                          ItemsSource="{Binding Source={StaticResource ActionTargetType}}" 
+                          SelectedItem="{Binding SelectedSubjectActionTargetType, Mode=TwoWay}"
+                          HorizontalAlignment="Stretch">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                
+                <ComboBox Grid.Column="1" ui:ControlHelper.Header="Subject Target"
+                          ItemsSource="{Binding SubjectConditionTypes}" 
+                          SelectedItem="{Binding SelectedSubjectActionConditionType, Mode=TwoWay}"
+                          HorizontalAlignment="Stretch">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </Grid>
+            
+            <Grid helper:GridHelper.Spacing="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                
+                <ComboBox Grid.Column="0" ui:ControlHelper.Header="Activity Type" 
+                          ItemsSource="{Binding Source={StaticResource ActionActivityType}}" 
+                          SelectedItem="{Binding SelectedActionActivityType, Mode=TwoWay}"
+                          HorizontalAlignment="Stretch">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                
+                <ComboBox Grid.Column="1" ui:ControlHelper.Header="Activity Value"
+                          ItemsSource="{Binding ActivityTypes}" 
+                          SelectedItem="{Binding SelectedActionActivityConditionType, Mode=TwoWay}"
+                          HorizontalAlignment="Stretch">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </Grid>
+            
+            <Grid helper:GridHelper.Spacing="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                
+                <ComboBox Grid.Column="0" ui:ControlHelper.Header="Object Type" 
+                          ItemsSource="{Binding Source={StaticResource ActionTargetType}}" 
+                          SelectedItem="{Binding SelectedObjectActionTargetType, Mode=TwoWay}"
+                          HorizontalAlignment="Stretch">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                
+                <ComboBox Grid.Column="1" ui:ControlHelper.Header="Object Target"
+                          ItemsSource="{Binding ObjectActionConditionTypes}" 
+                          SelectedItem="{Binding SelectedObjectActionConditionType, Mode=TwoWay}"
+                          HorizontalAlignment="Stretch">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </Grid>
+            
+            <Grid>
+                <ui:NumberBox Header="Activity Rate (1000 = 100%)" 
+                              Text="{Binding Condition.ActivityRate}"
+                              SmallChange="10" LargeChange="100"
+                              Minimum="0" Maximum="1000"
+                              SpinButtonPlacementMode="Inline"
+                              HorizontalAlignment="Stretch"/>
+            </Grid>
+        </ikw:SimpleStackPanel>
+        
+        <Label Grid.Column="1" Grid.Row="0" Content="Activity Mapping" FontWeight="Bold"/>
+        <ikw:SimpleStackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical" Margin="5" Spacing="5">
+            <Grid helper:GridHelper.Spacing="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                
+                <ComboBox Grid.Column="0" ui:ControlHelper.Header="Effect Type" 
+                          ItemsSource="{Binding Source={StaticResource ActionTargetType}}" 
+                          SelectedItem="{Binding SelectedEffectTargetType, Mode=TwoWay}"
+                          HorizontalAlignment="Stretch">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                
+                <ComboBox Grid.Column="1" ui:ControlHelper.Header="Effect Target"
+                          ItemsSource="{Binding EffectTargetTypes}" 
+                          SelectedItem="{Binding SelectedEffectTargetConditionType, Mode=TwoWay}"
+                          HorizontalAlignment="Stretch">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </Grid>
+            
+            <Grid helper:GridHelper.Spacing="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                
+                <ComboBox Grid.Column="0" ui:ControlHelper.Header="Effect Type" 
+                          ItemsSource="{Binding Source={StaticResource ActionActivityType}}" 
+                          SelectedItem="{Binding SelectedEffectActivityType, Mode=TwoWay}"
+                          HorizontalAlignment="Stretch">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                
+                <ComboBox Grid.Column="1" ui:ControlHelper.Header="Effect Target"
+                          ItemsSource="{Binding EffectActivityTypes}" 
+                          SelectedItem="{Binding SelectedEffectActivityConditionType, Mode=TwoWay}"
+                          HorizontalAlignment="Stretch">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </Grid>
+            
+            <Grid>
+                <ui:NumberBox Header="Effect Value" 
+                              Text="{Binding Effect.Value}"
+                              SmallChange="10" LargeChange="100"
+                              Minimum="0"
+                              SpinButtonPlacementMode="Inline"
+                              HorizontalAlignment="Stretch"/>
+            </Grid>
+        </ikw:SimpleStackPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="ShineSuite.View.Module.WelcomeModuleView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ShineSuite.View.Module"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Label Margin="5" Content="Welcome to the Shine Suite!" FontSize="18" FontWeight="Bold"/>
+            <TextBlock Text="This Tool created by Team Veritas is the next generation of Fiesta Online editing." Margin="5"/>
+            <TextBlock Foreground="Gray" Margin="5">
+                Tired of going through tons of excel like tables and adding new entries in 10 different files?
+                <LineBreak/>
+                Then this tool is just right for you! It will help you to manage your data in a more efficient way.
+                <LineBreak/>
+                Everything is stored in modules and you don't need to hop between different files anymore.
+            </TextBlock>
+        </StackPanel>
+    </Grid>
+</UserControl>

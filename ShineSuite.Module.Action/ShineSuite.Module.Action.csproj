@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <UseWPF>true</UseWPF>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+      <PackageReference Include="iNKORE.UI.WPF.Modern" Version="0.10.0" />
+      <PackageReference Include="WPF-UI" Version="4.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ShineData\ShineData.csproj" />
+      <ProjectReference Include="..\ShineSuite.Common\ShineSuite.Common.csproj" />
+      <ProjectReference Include="..\ShineSuite.DependencyInjection\ShineSuite.DependencyInjection.csproj" />
+    </ItemGroup>
+
+</Project>

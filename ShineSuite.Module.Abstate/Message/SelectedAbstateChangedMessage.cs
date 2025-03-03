@@ -3,9 +3,9 @@ using ShineData.Shine.Files;
 
 namespace ShineSuite.Module.Abstate.Message;
 
-public class SelectedAbstateChangedMessage : ValueChangedMessage<AbState>
+public class SelectedAbstateChangedMessage : ValueChangedMessage<AbStateEntry>
 {
-    public SelectedAbstateChangedMessage(AbState value) : base(value)
+    public SelectedAbstateChangedMessage(AbStateEntry value) : base(value)
     {
     }
 }
