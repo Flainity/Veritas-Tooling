@@ -23,7 +23,8 @@ public class ShineBinaryReader : BinaryReader
 
         if (length > 0)
         {
-            ret = Encoding.UTF8.GetString(buffer, 0, offset);
+            var encoding = Encoding.GetEncoding("iso-8859-1");
+            ret = encoding.GetString(buffer, 0, offset);
         }
 
         return ret;

@@ -1,13 +1,22 @@
-﻿using System.Linq;
+﻿using System;
+using System.ComponentModel;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using iNKORE.UI.WPF.Modern.Controls;
 using ShineData.Shine;
 using ShineData.Shine.Files;
 using ShineData.Shine.Structure.Enum;
 using ShineSuite.Common.Manager;
 using ShineSuite.Module.Abstate.Message;
+using ShineSuite.Module.Abstate.View.ContentDialog;
 using ShineSuite.Module.Abstate.Window;
+using MessageBox = iNKORE.UI.WPF.Modern.Controls.MessageBox;
 
 namespace ShineSuite.Module.Abstate.ViewModel;
 
@@ -16,10 +25,15 @@ public partial class AbstateListModel : ObservableObject
     public BaseShineFile<AbStateEntry> AbnormalState => ShineFileManager.Instance.AbState;
     
     [ObservableProperty] private AbStateEntry? _selectedAbState;
+    [ObservableProperty] private string _searchTerm;
+    [ObservableProperty] private ICollectionView _filteredAbstates;
+    
+    private CancellationTokenSource _debounceCts;
     
     public AbstateListModel()
     {
-        
+        FilteredAbstates = CollectionViewSource.GetDefaultView(AbnormalState.Records);
+        FilteredAbstates.Filter = FilterAbstates;
     }
 
     partial void OnSelectedAbStateChanged(AbStateEntry? value)
@@ -29,18 +43,60 @@ public partial class AbstateListModel : ObservableObject
         WeakReferenceMessenger.Default.Send(new SelectedAbstateChangedMessage(value));
     }
 
-    [RelayCommand]
-    private void CreateAbstate()
+    private bool FilterAbstates(object item)
     {
-        var createWindow = new NewAbstateWindow();
-        if (createWindow.ShowDialog() == true)
+        if (item is AbStateEntry entry)
         {
+            return string.IsNullOrEmpty(SearchTerm) || entry.InxName.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase);
+        }
+        
+        return false;
+    }
+
+    partial void OnSearchTermChanged(string value)
+    {
+        _debounceCts?.Cancel();
+        _debounceCts = new CancellationTokenSource();
+
+        Task.Delay(1000, _debounceCts.Token).ContinueWith(task =>
+        {
+            if (!task.IsCanceled)
+            {
+                Application.Current.Dispatcher.Invoke(() => FilteredAbstates.Refresh());
+            }
+        });
+    }
+
+    [RelayCommand]
+    private async void CreateAbstate()
+    {
+        //var createWindow = new NewAbstateWindow();
+        var createWindow = new ContentDialog
+        {
+            Title = "Create Abstate",
+            PrimaryButtonText = "Create",
+            SecondaryButtonText = "Cancel",
+            DefaultButton = ContentDialogButton.Primary,
+            Content = new CreateAbstateDialog()
+        };
+
+        var result = await createWindow.ShowAsync();
+        
+        if (result == ContentDialogResult.Primary)
+        {
+            var content = createWindow.Content as CreateAbstateDialog;
+            if (AbnormalState.Records.Any(x => x.InxName == content.AbstateName.Text))
+            {
+                MessageBox.Show("An abstate with that name already exists!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            
             var newAbstateIndex = AbnormalState.Records.OrderBy(x => (uint) x.AbstateIndex).Last().AbstateIndex + 1;
         
             var newAbstate = new AbStateEntry
             {
                 Id = (ushort)(AbnormalState.Records.LastOrDefault()!.Id + 1),
-                InxName = createWindow.AbstateName,
+                InxName = content.AbstateName.Text,
                 AbstateIndex = newAbstateIndex,
                 KeepTimeRatio = 1000,
                 KeepTimePower = 1,
@@ -48,24 +104,28 @@ public partial class AbstateListModel : ObservableObject
                 DispelAttribute = DispelAttribute.DA_NONE,
                 Duplicate = 0,
                 MainStateInx = "-",
-                SubAbstate = $"Sub{createWindow.AbstateName}",
+                SubAbstate = $"Sub{content.AbstateName.Text}",
             };
         
             ShineFileManager.Instance.AbState.Records.Add(newAbstate);
-
-            var newMemory = new AbstateMemoryEntry
+            
+            var lastMemoryRecord = ShineFileManager.Instance.AbstateMemory.Records.LastOrDefault();
+            if (lastMemoryRecord?.AbstateIndex == (uint)newAbstateIndex)
             {
-                AbstateIndex = (uint) newAbstateIndex,
-                AbstateMemoryStruct = AbstateMemoryStruct.AMS_ELEMENT_NORMAL,
-                SubAbstateAction = 0
-            };
+                var newMemory = new AbstateMemoryEntry
+                {
+                    AbstateIndex = (uint) newAbstateIndex + 1,
+                    AbstateMemoryStruct = AbstateMemoryStruct.AMS_ELEMENT_NORMAL,
+                    SubAbstateAction = 0
+                };
         
-            ShineFileManager.Instance.AbstateMemory.Records.Add(newMemory);
+                ShineFileManager.Instance.AbstateMemory.Records.Add(newMemory);
+            }
 
             var newSubAbstate = new SubAbStateEntry
             {
                 Id = (ushort)(ShineFileManager.Instance.SubAbState.Records.LastOrDefault()!.Id + 1),
-                InxName = $"Sub{createWindow.AbstateName}",
+                InxName = $"Sub{content.AbstateName.Text}",
                 Strength = 1,
                 Type = SubState.SUBAB_DEFAULT,
                 SubType = 1,
@@ -85,7 +145,7 @@ public partial class AbstateListModel : ObservableObject
             var newAbstateView = new AbStateViewEntry
             {
                 Id = (ushort) (ShineFileManager.Instance.AbStateView.Records.LastOrDefault().Id + 1),
-                InxName = createWindow.AbstateName,
+                InxName = content.AbstateName.Text,
                 Icon = 0,
                 IconFile = "AbState00",
                 Description = "A magical effect!",

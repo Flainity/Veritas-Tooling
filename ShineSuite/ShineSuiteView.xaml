@@ -11,38 +11,6 @@
         ui:WindowHelper.SystemBackdropType="Mica"
         WindowStartupLocation="CenterScreen"
         Title="Shine Suite :: Best Tools since 2012 :: Copyright © by Legends of Veritas" Height="1000" Width="1800" d:DataContext="{d:DesignInstance viewmodels:ShineSuiteViewModel}">
-    <!--<Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150"/>
-            <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        
-        <Separator Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Bottom"/>
-        
-        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
-            <Rectangle VerticalAlignment="Stretch" Stroke="DarkGray" Width="1" Margin="2"/>
-        </StackPanel>
-        
-        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal">
-            <Label Content="Veritas Shine Suite" FontWeight="Bold" FontSize="20"/>
-            <Label Content="The next generation of Fiesta Online Editing" FontSize="12" Foreground="Gray" VerticalAlignment="Center"/>
-        </StackPanel>
-        
-        <StackPanel Grid.Column="0" Grid.Row="1">
-            <Button Content="Abstate Module" Command="{Binding LoadAbstateModuleCommand}"/>
-            <Button Content="Action Module" Command="{Binding LoadActionModuleCommand}"/>
-            <Button Content="Skill Module" Command="{Binding LoadSkillModuleCommand}"/>
-        </StackPanel>
-        
-        <Border Grid.Row="1" Grid.Column="2" Margin="5">
-            <ContentControl Content="{Binding CurrentModule}"/>
-        </Border>
-    </Grid>-->
     
     <ui:NavigationView IsPaneOpen="False" SelectedItem="{Binding SelectedPage, Mode=TwoWay}">
         <ui:NavigationView.MenuItems>

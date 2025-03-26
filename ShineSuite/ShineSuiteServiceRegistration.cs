@@ -12,21 +12,21 @@ public class ShineSuiteServiceRegistration : IServiceRegistration
 {
     public void RegisterServices(IServiceCollection services)
     {
-        services.AddTransient<ShineSuiteView>();
-        services.AddTransient<ShineSuiteViewModel>();
+        services.AddSingleton<ShineSuiteView>();
+        services.AddSingleton<ShineSuiteViewModel>();
         
         services.AddSingleton<StartupWindow>();
         services.AddSingleton<StartupWindowModel>();
         
-        services.AddTransient<WelcomeModuleView>();
+        services.AddSingleton<WelcomeModuleView>();
         
-        services.AddTransient<SkillModuleView>();
+        services.AddSingleton<SkillModuleView>();
         
-        services.AddTransient<AbstateModuleView>();
-        services.AddTransient<AbstateModuleModel>();
+        services.AddSingleton<AbstateModuleView>();
+        services.AddSingleton<AbstateModuleModel>();
         
-        services.AddTransient<ActionModuleView>();
-        services.AddTransient<ActionModuleModel>();
+        services.AddSingleton<ActionModuleView>();
+        services.AddSingleton<ActionModuleModel>();
 
         services.AddSingleton<SettingsPage>();
         

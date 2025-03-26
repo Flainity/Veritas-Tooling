@@ -8,10 +8,10 @@
         mc:Ignorable="d"
         modern:WindowHelper.UseModernWindowStyle="True"
         modern:WindowHelper.SystemBackdropType="Mica"
-        Title="New Abstate" Height="120" Width="300" ResizeMode="NoResize">
+        Title="New Abstate" Height="120" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <StackPanel>
-            <TextBox modern:ControlHelper.PlaceholderText="Enter New Abstate Index Name" x:Name="AbstateNameTextBox" HorizontalAlignment="Stretch" Margin="5"/>
+            <TextBox modern:ControlHelper.PlaceholderText="New abstate index..." x:Name="AbstateNameTextBox" HorizontalAlignment="Stretch" Margin="5"/>
             <Button Content="Create" HorizontalAlignment="Stretch" Margin="5" Click="ButtonBase_OnClick"/>
         </StackPanel>
     </Grid>

@@ -20,12 +20,12 @@ public static class BinaryWriterExtension
     {
         if (length == -1)
         {
-            writer.Write(Encoding.Default.GetBytes(value));
+            writer.Write(Encoding.GetEncoding("iso-8859-1").GetBytes(value));
             writer.Write((byte)0);
             return;
         }
 
-        writer.Write(Encoding.Default.GetBytes(value));
+        writer.Write(Encoding.GetEncoding("iso-8859-1").GetBytes(value));
 
         for (var i = value.Length; i < length; i++)
         {

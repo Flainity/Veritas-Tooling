@@ -17,6 +17,7 @@
     
     <Grid Margin="10">
         <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -27,7 +28,19 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         
-        <GroupBox Grid.Row="0" Header="General Information">
+        <ui:ScrollViewerEx Grid.Row="0" Grid.ColumnSpan="3" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
+            <ui:CommandBar DefaultLabelPosition="Right">
+                <ui:CommandBar.PrimaryCommands>
+                    <ui:AppBarButton Label="Save Skills" Command="{Binding SaveSkillsCommand}">
+                        <ui:AppBarButton.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Save}"/>
+                        </ui:AppBarButton.Icon>
+                    </ui:AppBarButton>
+                </ui:CommandBar.PrimaryCommands>
+            </ui:CommandBar>
+        </ui:ScrollViewerEx>
+        
+        <GroupBox Grid.Row="1" Header="General Information">
             <ikw:SimpleStackPanel Orientation="Vertical" Margin="5" Spacing="5">
                 <Grid helper:GridHelpers.Spacing="5">
                     <Grid.ColumnDefinitions>
@@ -69,9 +82,8 @@
             </ikw:SimpleStackPanel>
         </GroupBox>
         
-        <GroupBox Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="1" Header="Effects">
+        <GroupBox Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="2" Header="Effects">
             <StackPanel Orientation="Vertical">
-                <!--<Button Content="Add new Step" MinHeight="30"/>-->
                 <TabControl TabStripPlacement="Top" ui:TabControlHelper.IsAddTabButtonVisible="False" 
                             ItemsSource="{Binding ActiveSkillSteps}" 
                             SelectedItem="{Binding SelectedActiveSkillStep}">

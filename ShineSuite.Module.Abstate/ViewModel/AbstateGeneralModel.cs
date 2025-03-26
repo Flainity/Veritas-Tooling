@@ -21,12 +21,14 @@ namespace ShineSuite.Module.Abstate.ViewModel;
 
 public partial class AbstateGeneralModel : ObservableObject, IRecipient<SelectedAbstateChangedMessage>
 {
+    public ObservableCollection<string> EffectTypeOptions { get; } = new() { "BUFF", "DEBUFF" };
+    
     private BaseShineFile<AbStateEntry> AbStates => ShineFileManager.Instance.AbState;
     private BaseShineFile<AbstateMemoryEntry> AbstateMemories => ShineFileManager.Instance.AbstateMemory;
-    public BaseShineFile<SubAbStateEntry> SubAbStates => ShineFileManager.Instance.SubAbState;
+    private BaseShineFile<SubAbStateEntry> SubAbStates => ShineFileManager.Instance.SubAbState;
 
-    public int IconSize = 16;
-    public int IconColumns = 8;
+    public readonly int IconSize = 16;
+    public readonly int IconColumns = 8;
     
     [ObservableProperty] private AbStateEntry? _selectedAbState;
     [ObservableProperty] private AbstateMemoryEntry? _selectedAbstateMemory;
@@ -35,20 +37,35 @@ public partial class AbstateGeneralModel : ObservableObject, IRecipient<Selected
 
     [ObservableProperty] private bool _isAbstateMemoryVisible;
     [ObservableProperty] private bool _isSubAbStateVisible;
+    [ObservableProperty] private bool _isAbstateBuff;
+    [ObservableProperty] private bool _hasAbstateNoMainState;
+    [ObservableProperty] private bool _hasAbstateMainState;
+    
     [ObservableProperty] private BitmapImage? _icon;
     [ObservableProperty] private BitmapSource? _selectedIcon;
     [ObservableProperty] private VisualBrush? _iconOverlay;
     [ObservableProperty] private int _iconOverlayX;
     [ObservableProperty] private int _iconOverlayY;
 
+    [ObservableProperty] private List<string> _iconFiles;
+
     public AbstateGeneralModel()
     {
         WeakReferenceMessenger.Default.Register(this);
+
+        const string iconsPath = @"C:\Veritas\9Data\Shine\Graphics\Icons";
+        
+        if (Directory.Exists(iconsPath))
+        {
+            IconFiles = Directory.GetFiles(iconsPath, "*.png").Select(Path.GetFileNameWithoutExtension).ToList();
+        }
     }
 
     public void Receive(SelectedAbstateChangedMessage message)
     {
         SelectedAbState = message.Value;
+        HasAbstateNoMainState = SelectedAbState.MainStateInx == "-";
+        HasAbstateMainState = !HasAbstateNoMainState;
 
         var abstateMemory = AbstateMemories.Records.FirstOrDefault(x => x.AbstateIndex == (uint) message.Value.AbstateIndex);
         
@@ -76,6 +93,7 @@ public partial class AbstateGeneralModel : ObservableObject, IRecipient<Selected
         if (abstateView != null)
         {
             SelectedAbstateView = abstateView;
+            IsAbstateBuff = abstateView.IconSort == "BUFF";
             LoadIcon(abstateView.IconFile);
         }
     }
@@ -117,6 +135,7 @@ public partial class AbstateGeneralModel : ObservableObject, IRecipient<Selected
         ShineFileManager.Instance.AbState.Save();
         ShineFileManager.Instance.AbstateMemory.Save();
         ShineFileManager.Instance.SubAbState.Save();
+        ShineFileManager.Instance.AbStateView.Save();
     }
     
     public void UpdateOverlayPosition()

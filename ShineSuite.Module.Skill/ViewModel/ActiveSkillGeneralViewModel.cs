@@ -18,6 +18,8 @@ public partial class ActiveSkillGeneralViewModel : ObservableObject, IRecipient<
     public ObservableCollection<ActiveSkillInfoServerEntry> AssociatedActiveSkillInfoServer = new();
     public ObservableCollection<ActiveSkillViewEntry> AssociatedActiveSkillView = new();
     
+    public ObservableCollection<ActiveSkillViewEntry> ActiveSkillView => ShineFileManager.Instance.ActiveSkillView.Records;
+    
     [ObservableProperty] private ActiveSkillEntry? _selectedActiveSkill;
     [ObservableProperty] private ObservableCollection<ActiveSkillStepModel> _activeSkillSteps = new();
     [ObservableProperty] private ActiveSkillStepModel? _selectedActiveSkillStep;

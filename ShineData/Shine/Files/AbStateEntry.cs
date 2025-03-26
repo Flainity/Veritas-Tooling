@@ -28,23 +28,23 @@ public class AbStateEntry : IShineEntry
     public AbStateEntry()
     {
         Id = 0;
-        InxName = "Hello World";
+        InxName = "StaNewAbstate";
         AbstateIndex = AbstateIndex.STA_BH_HELGA_NONE;
         KeepTimeRatio = 0;
         KeepTimePower = 0;
         StateGrade = 0;
-        PartyState01 = "Hello World";
-        PartyState02 = "Hello World";
-        PartyState03 = "Hello World";
-        PartyState04 = "Hello World";
-        PartyState05 = "Hello World";
+        PartyState01 = "-";
+        PartyState02 = "-";
+        PartyState03 = "-";
+        PartyState04 = "-";
+        PartyState05 = "-";
         PartyRange = 0;
         PartyEnchantNumber = 0;
-        SubAbstate = "Hello World";
+        SubAbstate = "-";
         DispelAttribute = DispelAttribute.DA_NONE;
         SubDispelAttribute = SubDispelAttribute.SDA_NONE;
         AbstateSaveType = AbstateSaveType.AST_NONE;
-        MainStateInx = "Hello World";
+        MainStateInx = "-";
         Duplicate = 0;
     }
     

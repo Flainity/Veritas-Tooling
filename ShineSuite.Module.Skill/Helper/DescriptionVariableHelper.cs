@@ -15,6 +15,8 @@ public partial class DescriptionVariableHelper
         {
             var placeholder = match.Groups[1].Value;
             var replacement = string.Empty;
+            
+            
 
             switch (placeholder)
             {
